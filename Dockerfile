@@ -22,7 +22,7 @@ RUN echo "deb http://www.deb-multimedia.org jessie main non-free" >> /etc/apt/so
         lame \
         vim && \
     mkdir -p /abcde/out && \
-    echo "syntax on\nset expandtab ts=4 sw=4 autoindent" >> etc/vim/vimrc
+    echo "syntax on\nset expandtab ts=4 sw=4 autoindent encoding=utf8" >> etc/vim/vimrc
 
 ADD abcde.conf /etc/abcde.conf
 

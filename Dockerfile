@@ -1,30 +1,23 @@
-FROM debian:jessie
-MAINTAINER Benoît Vidis
+FROM alpine:3.7
+MAINTAINER Benoît Vidis <contact@benoitvidis.com>
 
 ENV EDITOR=vim
 ENV TERM=xterm-color
 
-RUN apt-get update && apt-get install -y locales && locale-gen en_US.UTF-8  
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8 
+RUN	 apk add --no-cache \
+			abcde \
+			cdparanoia \
+			flac \
+			lame \
+			nano \
+			py-eyed3 \
+			vim \
+			vorbis-tools \
+	&& mkdir -p /abcde/out \
+  && echo "syntax on\nset expandtab ts=4 sw=4 autoindent encoding=utf8" >> etc/vim/vimrc \
+	&& echo done
 
-ADD https://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2015.6.1_all.deb /root/
-RUN echo "deb http://www.deb-multimedia.org jessie main non-free" >> /etc/apt/sources.list && \
-    dpkg -i /root/deb-multimedia-keyring_2015.6.1_all.deb && \
-    apt-get update && \
-    apt-get install -y \
-        abcde \
-        eyed3 \
-        flac \
-        id3 \
-        nano \
-        lame \
-        vim && \
-    mkdir -p /abcde/out && \
-    echo "syntax on\nset expandtab ts=4 sw=4 autoindent encoding=utf8" >> etc/vim/vimrc
-
-ADD abcde.conf /etc/abcde.conf
-
+COPY abcde.conf /etc/abcde.conf
 
 ENTRYPOINT [ "abcde" ]
+

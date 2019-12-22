@@ -6,4 +6,4 @@ services:
     devices:
       - /dev/sr0:/dev/sr0
     volumes:
-      ./out:/abcde/out
+      - ./out:/abcde/out

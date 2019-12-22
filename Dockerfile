@@ -28,7 +28,7 @@ RUN  set -x \
       vim \
   \
 	&& mkdir -p /abcde/out \
-  && echo "syntax on\nset expandtab ts=4 sw=4 autoindent encoding=utf8" >> etc/vim/vimrc \
+  && echo -n "\nsyntax on\nset expandtab\nset tabstop=4\nset shiftwidth=4\nsset autoindent\nset encoding=utf8" >> etc/vim/vimrc \
   \
   && curl -SLo /tmp/libdiscid.tar.gz http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.6.2.tar.gz \
   && cd /tmp \
@@ -41,8 +41,7 @@ RUN  set -x \
   && cpan -f -i -q \
     XML::LibXML \
     YAML \
-    WebService::MusicBrainz::Track \
-    WebService::MusicBrainz::Release \
+    WebService::MusicBrainz \
     MusicBrainz::DiscID \
     MusicBrainz \
   \

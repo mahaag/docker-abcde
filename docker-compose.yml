@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  abcde:
+    image: vidiben/abcde
+    devices:
+      - /dev/sr0:/dev/sr0
+    volumes:
+      ./out:/abcde/out

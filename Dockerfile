@@ -25,10 +25,15 @@ RUN  set -x \
       libxml2 \
       mutagen \
       perl \
+      python3 \
       vim \
   \
 	&& mkdir -p /abcde/out \
   && echo -n "\nsyntax on\nset expandtab\nset tabstop=4\nset shiftwidth=4\nsset autoindent\nset encoding=utf8" >> etc/vim/vimrc \
+  \
+  && pip3 install -U \
+    eyed3 \
+    pylast==2.4.0 \
   \
   && curl -SLo /tmp/libdiscid.tar.gz http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.6.2.tar.gz \
   && cd /tmp \

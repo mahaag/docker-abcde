@@ -21,6 +21,7 @@ RUN  set -x \
       cdparanoia \
       flac \
       lame \
+      less \
       libcddb \
       libxml2 \
       mutagen \

@@ -992,6 +992,9 @@ do_tag ()
 			echo ARTIST="$TRACKARTIST"
 			echo ALBUM="$DALBUM"
 			echo TITLE="$TRACKNAME"
+			if [ -n "$VARIOUSARTISTSALBUMARTIST" ]; then
+				echo ALBUMARTIST="$VARIOUSARTISTSALBUMARTIST"
+			fi
 			if [ -n "$CDYEAR" ]; then
 				echo DATE="$CDYEAR"
 			fi
@@ -1672,6 +1675,7 @@ do_move ()
 		# Create ALBUMFILE, ARTISTFILE, TRACKFILE
 		ALBUMFILE="$(mungealbumname "$DALBUM")"
 		ARTISTFILE="$(mungeartistname "$TRACKARTIST")"
+		VAALBUMARTISTFILE="$(mungeartistname "$VARIOUSARTISTSALBUMARTIST")"
 		TRACKFILE="$(mungetrackname "$TRACKNAME")"
 		GENRE="$(mungegenre "$GENRE")"
 		YEAR=${CDYEAR:-$CDYEAR}

@@ -857,7 +857,7 @@ do_tag ()
 			# Set TPE2 in case we have a Various Artists rip.
 			TPE2=""
 			if [ "$VARIOUSARTISTS" = "y" ]; then
-				TPE2="Various"
+				TPE2="${VARIOUSARTISTSALBUMARTIST}"
 			fi
 
 			case "$ID3SYNTAX" in
@@ -2892,6 +2892,7 @@ do_cddbedit ()
 		CDDBDATA="${ABCDETEMPDIR}/cddbread.$(checkstatus cddb-choice)"
 		VARIOUSARTISTS="$(checkstatus variousartists)"
 		VARIOUSARTISTSTYLE="$(checkstatus variousartiststyle)"
+		VARIOUSARTISTSALBUMARTIST="$(checkstatus variousartistsalbumartist)"
 		return 0
 	fi
 	if [ "$INTERACTIVE" = "y" ]; then
@@ -3202,6 +3203,33 @@ do_cddbedit ()
 	fi
 
 	echo "cddb-edit" >> "${ABCDETEMPDIR}/status"
+}
+
+do_albumartist ()
+{
+	checkstatus variousartistsalbumartist && return
+
+	if [ "$VARIOUSARTISTS" = "y" ] && [ ! "$ONETRACK" = "y" ]; then
+
+		DEFAULTVARIOUSARTISTSALBUMARTIST=${DARTIST:-$VARIOUSARTISTSALBUMARTIST}
+		echo -n "Enter the Album Artist ($DEFAULTVARIOUSARTISTSALBUMARTIST) : " >&2
+		if [ "$INTERACTIVE" = "y" ]; then
+			read VARIOUSARTISTSALBUMARTIST
+		else
+			echo $DEFAULTVARIOUSARTISTSALBUMARTIST >&2
+			VARIOUSARTISTSALBUMARTIST=$DEFAULTVARIOUSARTISTSALBUMARTIST
+		fi
+		if [ -z "$VARIOUSARTISTSALBUMARTIST" ]; then
+			VARIOUSARTISTSALBUMARTIST=$DEFAULTVARIOUSARTISTSALBUMARTIST
+		fi
+		echo "Album Artist is set to $VARIOUSARTISTSALBUMARTIST" >&2
+
+	fi
+
+	echo "variousartistsalbumartist=$VARIOUSARTISTSALBUMARTIST" >> "$ABCDETEMPDIR/status"
+
+	addstatus "variousartistsalbumartist=$VARIOUSARTISTSALBUMARTIST"
+
 }
 
 # do_getalbumart
@@ -3802,6 +3830,8 @@ MP2ENCODERSYNTAX=default
 AACENCODERSYNTAX=default
 NORMALIZERSYNTAX=default
 CUEREADERSYNTAX=default
+
+VARIOUSARTISTSALBUMARTIST='Various Artists'
 
 OUTPUTFORMAT='${ARTISTFILE}-${ALBUMFILE}/${TRACKNUM}.${TRACKFILE}'
 # Use the following VAOUTPUTFORMAT to revert to 2.0.x VA format:
@@ -5191,6 +5221,8 @@ if [ "$DOCDDB" = "y" ]; then
 	do_cddbedit
 
 	eval "$($CDDBTOOL parse "$CDDBDATA")"
+
+	do_albumartist
 fi
 
 # Before reading tracks, we set the speed of the device

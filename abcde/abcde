@@ -39,6 +39,7 @@ echo "-g     Use \"lame --nogap\" for MP3 encoding. Disables low disk and pipes 
 echo "-G     Get album art by using the 'getalbumart' action"
 echo "-h     This help information"
 #echo "-i    Tag files while encoding, when possible (local only) -NWY-"
+echo "-I <#> Disc number in a set of discs"
 echo "-j <#> Number of encoder processes to run at once (localhost)"
 echo "-k     Keep the wav tracks for later use"
 echo "-l     Use low disk space algorithm"
@@ -4168,7 +4169,7 @@ case "$EXTRAVERBOSE" in
 esac
 
 # Parse command line options
-while getopts 1a:bBc:C:d:DefgGhj:klLmMnNo:pPQ:r:s:S:t:T:UvVxX:w:W:z opt ; do
+while getopts 1a:bBc:C:d:DefgGhj:I:klLmMnNo:pPQ:r:s:S:t:T:UvVxX:w:W:z opt ; do
 	case "$opt" in
 		1) ONETRACK=y ;;
 		a) ACTIONS="$OPTARG" ;;
@@ -4192,6 +4193,7 @@ while getopts 1a:bBc:C:d:DefgGhj:klLmMnNo:pPQ:r:s:S:t:T:UvVxX:w:W:z opt ; do
 		g) NOGAP=y ;;
 		G) GETALBUMART=y ;;
 		i) INLINETAG=y ;;
+		I) DISCNUMBER="${OPTARG}" ;;
 		j) MAXPROCS="$OPTARG" ;;
 		k) KEEPWAVS=y ;;
 		l) LOWDISK=y ;;

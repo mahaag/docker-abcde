@@ -1678,6 +1678,10 @@ do_move ()
 		ARTISTFILE="$(mungeartistname "$TRACKARTIST")"
 		VAALBUMARTISTFILE="$(mungeartistname "$VARIOUSARTISTSALBUMARTIST")"
 		TRACKFILE="$(mungetrackname "$TRACKNAME")"
+		DISCNUMBERFILE=""
+		if [[ -n "${DISCNUMBER}" ]]; then
+			DISCNUMBERFILE="CD${DISCNUMBER}"
+		fi
 		GENRE="$(mungegenre "$GENRE")"
 		YEAR=${CDYEAR:-$CDYEAR}
 		# If we want to start the tracks with a given number, we need to modify
